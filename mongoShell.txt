@@ -1,0 +1,34 @@
+db.users.insertMany([
+    {
+        name:'nika',
+        surnmae:'maisuradze',
+    },
+    {
+        name:'lado',
+        surnmae:'ragvaria',
+    },
+    {
+        name:'nikala',
+    },
+    {
+        name:'nikoloz',
+        surnmae:'gvariani',
+    },
+    {
+        name:'kaxa',
+    },
+        {
+        name:'mari',
+        surnmae:'amgvari',
+    },
+    {
+        name:'nini',
+    },
+    {
+        name:'gio',
+        surnmae:'giorgadze',
+    },
+    {
+        name:'otar',
+    }
+])

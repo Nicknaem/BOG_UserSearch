@@ -1,0 +1,10 @@
+  // db.collection("users").insertOne({name:"nika"}, (err)=>{
+  //   console.log("one document inserted in users");
+  // })
+
+  // db.collection("users").find({}).toArray((err,users)=>{
+  //   console.log(err)
+  //   console.log(users);
+  // })
+
+  Q: text search vs regex
