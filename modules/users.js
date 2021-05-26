@@ -1,0 +1,1 @@
+//bazastan samushao obieqtebi

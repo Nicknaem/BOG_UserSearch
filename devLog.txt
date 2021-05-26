@@ -8,3 +8,62 @@
   // })
 
   Q: text search vs regex
+
+  //----------------------------------- mongodb conection working state 1 
+  const client = new MongoClient(url , { useUnifiedTopology: true });
+
+  client.connect((err)=>{ 
+    db = client.db(DatabaseName); //FIX "const db" was stupid thing, because db was block-scoped
+    console.log("connected to database");
+    // client.close(); closes connection before other async functions execute
+  })
+
+Q: should all routes be in one file or in separated ones
+Q: should we allways use Connection.get when we want to access db
+
+//=================================== Fetch examples
+
+//----------------------------------- GET Request
+
+fetch(`http://localhost:3000/users?name=${searchInput.value}`).then((response)=>{
+        return response.json();
+    }).then((data)=>{
+        console.log(data);
+        render(data);
+    })
+
+fetch('/users?' + new URLSearchParams({
+        name: filter.name,
+    }).then((response)=> response.json())
+      .then((data) => {
+        console.log(data);
+        render(data);
+      })
+      .catch((err)=> console.log(err))
+
+//----------------------------------- POST Request
+
+let getUsers = ()=>{
+    fetch(`http://localhost:3000/users?name=${searchInput.value}`).then((response)=>{
+        return response.json();
+    }).then((data)=>{
+        console.log(data);
+        render(data);
+    })
+}
+
+let getUsers = ()=>{
+    fetch('http://localhost:3000/users',{
+        method: 'post',
+        body: URLSearchParams({
+            name: searchInput.value 
+        })
+    })
+}
+
+//----------------------------------- express get
+
+app.get('/users', (req,res)=>{
+    var queryParams = req.query;
+    console.log(queryParams.name);
+}
