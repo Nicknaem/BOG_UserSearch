@@ -5,6 +5,10 @@
   Q: should we allways use Connection.get when we want to access db 
     A: Yes
   Q: text search vs regex
+  
+  Q: empty regex queries all data
+  Q: no surname users arenot queried anymore because of and
+   
 
 
 //=================================== Special feature

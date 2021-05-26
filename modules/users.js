@@ -4,8 +4,11 @@ class Users {
     static async search(params){
         //query by name or surname
         console.log(params);
-        const queryDb = {
-            name: { $regex: params.name } 
+        const queryDb = { 
+            $and:[
+                {name: {$regex: params.name}},
+                {surname: {$regex: params.surname}}
+            ] 
         }
         const searchCursor = await Connection.get().collection('users').find(queryDb);
         const foundUsers = await searchCursor.toArray();

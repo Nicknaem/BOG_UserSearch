@@ -63,7 +63,7 @@ let renderUsers = (data)=>{
 let splitOnWords = ( fullString, queryWords) => {
     let indexArr = [];
     queryWords.forEach(word=>{
-        if(word != undefined){
+        if(word != undefined && word != ''){
             let wStart = fullString.search(word);
             indexArr.push(wStart);
             indexArr.push(wStart+word.length);

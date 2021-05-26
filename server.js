@@ -2,26 +2,24 @@
 var path = require("path");
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 3000;
 
 var Connection = require('./common/connection.js')
+var Config = require('./common/config.js');
 var Users = require('./modules/users')
 
 //=================================== Middleware
-app.use(express.json()); //all coming requests will be converted to json for server
-app.use(express.static(__dirname + '/app')); //serve static files
+app.use(express.json());                        //all coming requests will be converted to json for server
+app.use(express.static(__dirname + '/app'));    //serve static files
 
 //================================== MongoDb connection
 const MongoClient = require('mongodb').MongoClient;
-const { urlencoded } = require("express");
-const url = ('mongodb://localhost:27017');
-const DatabaseName = 'chatDB'
 
-MongoClient.connect( url , { useUnifiedTopology: true }, (err,client)=>{
+MongoClient.connect( Config.mongodb.dbUrl , Config.mongodb.options, (err,client)=>{
   if(err){
     return console.log(err);
   } 
-  Connection.set(client.db(DatabaseName)); //FIX DatabaseName should be in config
+  Connection.set(client.db(Config.mongodb.dbName));
   console.log("connected to database");
 
   app.listen(port, () => {
