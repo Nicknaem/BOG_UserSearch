@@ -1,69 +1,64 @@
-  // db.collection("users").insertOne({name:"nika"}, (err)=>{
-  //   console.log("one document inserted in users");
-  // })
+//=================================== Questions
 
-  // db.collection("users").find({}).toArray((err,users)=>{
-  //   console.log(err)
-  //   console.log(users);
-  // })
-
+  Q: should all routes be in one file or in separated ones
+    A: leave them in server.js for this time 
+  Q: should we allways use Connection.get when we want to access db 
+    A: Yes
   Q: text search vs regex
 
-  //----------------------------------- mongodb conection working state 1 
-  const client = new MongoClient(url , { useUnifiedTopology: true });
 
-  client.connect((err)=>{ 
-    db = client.db(DatabaseName); //FIX "const db" was stupid thing, because db was block-scoped
-    console.log("connected to database");
-    // client.close(); closes connection before other async functions execute
-  })
+//=================================== Special feature
 
-Q: should all routes be in one file or in separated ones
-Q: should we allways use Connection.get when we want to access db
+  Highlight text on search algorithm 
+
+    //foreach record
+    //create full record text
+    //split text on query words
+    //create new full text as - textpart <span>query word</span> textpart
 
 //=================================== Fetch examples
 
-//----------------------------------- GET Request
+    //----------------------------------- GET Request
 
-fetch(`http://localhost:3000/users?name=${searchInput.value}`).then((response)=>{
-        return response.json();
-    }).then((data)=>{
-        console.log(data);
-        render(data);
-    })
-
-fetch('/users?' + new URLSearchParams({
-        name: filter.name,
-    }).then((response)=> response.json())
-      .then((data) => {
-        console.log(data);
-        render(data);
-      })
-      .catch((err)=> console.log(err))
-
-//----------------------------------- POST Request
-
-let getUsers = ()=>{
     fetch(`http://localhost:3000/users?name=${searchInput.value}`).then((response)=>{
-        return response.json();
-    }).then((data)=>{
-        console.log(data);
-        render(data);
-    })
-}
-
-let getUsers = ()=>{
-    fetch('http://localhost:3000/users',{
-        method: 'post',
-        body: URLSearchParams({
-            name: searchInput.value 
+            return response.json();
+        }).then((data)=>{
+            console.log(data);
+            render(data);
         })
-    })
-}
 
-//----------------------------------- express get
+    fetch('/users?' + new URLSearchParams({
+            name: filter.name,
+        }).then((response)=> response.json())
+          .then((data) => {
+            console.log(data);
+            render(data);
+          })
+          .catch((err)=> console.log(err))
 
-app.get('/users', (req,res)=>{
-    var queryParams = req.query;
-    console.log(queryParams.name);
-}
+    //----------------------------------- POST Request
+
+    let getUsers = ()=>{
+        fetch(`http://localhost:3000/users?name=${searchInput.value}`).then((response)=>{
+            return response.json();
+        }).then((data)=>{
+            console.log(data);
+            render(data);
+        })
+    }
+
+    let getUsers = ()=>{
+        fetch('http://localhost:3000/users',{
+            method: 'post',
+            body: URLSearchParams({
+                name: searchInput.value 
+            })
+        })
+    }
+
+    //----------------------------------- express get
+
+    app.get('/users', (req,res)=>{
+        var queryParams = req.query;
+        console.log(queryParams.name);
+    }

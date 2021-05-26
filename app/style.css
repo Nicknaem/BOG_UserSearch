@@ -24,6 +24,9 @@
     padding: 10px 0px;
     animation: slideUp 0.4s forwards ease;
 }
+.query{
+    color: orange;
+}
 @keyframes slideUp {
     0% {
         transform: translateY(100%);

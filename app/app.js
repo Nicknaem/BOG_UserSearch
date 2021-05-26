@@ -50,10 +50,52 @@ let renderUsers = (data)=>{
     let mainBoard = document.getElementById('main-board');
     mainBoard.innerHTML = '';
 
+    let [qName, qSurname] = searchInput.value.split(' ');
+
     data.forEach((element,index) => {
-        mainBoard.insertAdjacentHTML('beforeend', `<div class="record">Fullname: ${element.name} ${element.surname?element.surname:''}</div>`);
+        let rawText = `${element.name} ${element.surname?element.surname:''}`
+
+        mainBoard.insertAdjacentHTML('beforeend', `<div class="record">Fullname: ${createText(splitOnWords(rawText,[qName,qSurname]))}</div>`);
         document.getElementById('main-board').lastChild.style.animationDelay = `${0.05 * index}s`
     });
+}
+
+let splitOnWords = ( fullString, queryWords) => {
+    let indexArr = [];
+    queryWords.forEach(word=>{
+        if(word != undefined){
+            let wStart = fullString.search(word);
+            indexArr.push(wStart);
+            indexArr.push(wStart+word.length);
+        }
+    }) 
+
+    let start = 0;
+    indexArr.push(fullString.length);
+
+    let splitString = [];
+    indexArr.forEach(index=>{
+        splitString.push(fullString.slice(start,index));
+        start = index;
+    })
+    return splitString;
+    //every even-th stringPart in splitString array is your giver word 1,3,...
+}
+
+let createText = (textParts)=>{
+    let textTemplate = '';
+
+    textParts.forEach((part,index)=>{
+        if(!(index%2===0)){
+            console.log(`word is: ${part} at index: ${index}`)
+            textTemplate = textTemplate.concat(`<span class="query">${part}</span>`);
+        }else{
+            console.log(`part is: ${part} at index: ${index}`)
+            textTemplate = textTemplate.concat(part);
+        }
+    })
+
+    return textTemplate;
 }
 
 searchInput.addEventListener("keyup", debounce( getUsers, 1000));
