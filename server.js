@@ -5,6 +5,7 @@ const app = express()
 const port = 3000
 
 var Connection = require('./common/connection.js')
+var Users = require('./modules/users')
 
 //=================================== Middleware
 app.use(express.json()); //all coming requests will be converted to json for server
@@ -31,37 +32,18 @@ MongoClient.connect( url , { useUnifiedTopology: true }, (err,client)=>{
 //=================================== Routes
 
 app.post('/users', (req,res)=>{
-    let queryParams = req.body;
-//----------------------------------- try 3
-// $text $seatch or $regex
-    Connection.get().collection('users').find({ name: { $regex: queryParams.name } }).toArray((err, items)=>{ 
-      res.json(items);
+    Users.search(req.body).then((result)=>{
+      res.json(result);  
     });
+});
 
-    app.get('/*', (req, res) => {
-      res.sendFile(path.join(__dirname + '/app/index.html'));
-    })
-//----------------------------------- try 2
-    //send back the searched results
-    // let data = searchUser(queryParams.name);
-    // console.log(data)
-    // console.log(typeof(data));
-    // res.json(data);
-//----------------------------------- try 1
-    //res.send(searchUser(queryParams.name));
+app.post('/add/user', (req,res)=>{
+    Users.insert(req.body);
 })
 
-//=================================== MongoDb functions
-function searchUser(query){
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/app/index.html'));
+})
 
-//----------------------------------- try 2
-    // return db.users.find({name: {'$search':'ni'}}).toArray();  // well it doesnot see users collection
-
-//----------------------------------- try 1 
-    // db.collection('users').find({}).toArray((err, items)=>{ //FIX? find() without {} was bugging you out 
-    //     return items;
-    // });
-    
-}
 
 

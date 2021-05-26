@@ -18,6 +18,7 @@ function debounce( callback, delay ) {
 }  
 
 let getUsers = ()=>{
+    let [queryName, querySurname] = searchInput.value.split(' ');
     fetch('http://localhost:3000/users',{
         headers:{
             'Accept': 'application/json',       //$$? isn't type json default 
@@ -25,7 +26,8 @@ let getUsers = ()=>{
         },
         method: 'POST',
         body: JSON.stringify({
-            name: searchInput.value
+            name: queryName,
+            surname: querySurname || ''
         })
     })
     .then((response)=> response.json())
@@ -47,8 +49,9 @@ let getUsers = ()=>{
 let renderUsers = (data)=>{
     let mainBoard = document.getElementById('main-board');
     mainBoard.innerHTML = '';
+
     data.forEach((element,index) => {
-        mainBoard.insertAdjacentHTML('beforeend', `<div class="record">Fullname: ${element.name} ${!element.surnmae?element.surnmae:''}</div>`);
+        mainBoard.insertAdjacentHTML('beforeend', `<div class="record">Fullname: ${element.name} ${element.surname?element.surname:''}</div>`);
         document.getElementById('main-board').lastChild.style.animationDelay = `${0.05 * index}s`
     });
 }

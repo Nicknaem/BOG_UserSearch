@@ -1,34 +1,55 @@
 db.users.insertMany([
     {
         name:'nika',
-        surnmae:'maisuradze',
+        surname:'maisuradze',
     },
     {
         name:'lado',
-        surnmae:'ragvaria',
+        surname:'ragvaria',
     },
     {
         name:'nikala',
     },
     {
         name:'nikoloz',
-        surnmae:'gvariani',
+        surname:'gvariani',
     },
     {
         name:'kaxa',
     },
         {
         name:'mari',
-        surnmae:'amgvari',
+        surname:'amgvari',
     },
     {
         name:'nini',
     },
     {
         name:'gio',
-        surnmae:'giorgadze',
+        surname:'giorgadze',
     },
     {
         name:'otar',
+        surname:'shvilishvili',
+    },
+    {
+        name:'beka',
+    },
+    {
+        name:'nana',
+    },
+    {
+        name:'natia',
+        surname:'smith',
+    },
+    {
+        name:'temur',
+    },
+    {
+        name:'giorgi',
+        surname:'qeburia',
+    },
+    {
+        name:'ia',
     }
 ])
