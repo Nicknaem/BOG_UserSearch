@@ -36,7 +36,9 @@ app.post('/users', (req,res)=>{
 });
 
 app.post('/add/user', (req,res)=>{
-    Users.insert(req.body);
+    Users.insert(req.body).then((result)=>{
+      res.json(result);  
+    });
 })
 
 app.get('/*', (req, res) => {

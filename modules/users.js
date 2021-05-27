@@ -14,8 +14,10 @@ class Users {
         const foundUsers = await searchCursor.toArray();
         return foundUsers;
     }
-    static async insert(){
-
+    static async insert(params){
+        let insertCursor = await Connection.get().collection('users').insertOne({name: params.name, surname: params.surname});
+        console.log('inserted: '+insertCursor.insertedCount);
+        return insertCursor.insertedCount;
     }
 }
 

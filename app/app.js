@@ -1,19 +1,10 @@
 const searchInput = document.getElementById('search-input');
 
-function debounce( callback, delay ) {
+let debounce = ( callback, delay )=>{
     let timeout;
     return function() {
         clearTimeout( timeout );
-        
-        timeout = setTimeout( 
-//----------------------------------- try 1
-        // () => {
-        //     getUsers().then((result) => {
-        //         console.log(result)
-        //         //renderUsers results
-        //     })
-        // }
-        getUsers, delay );
+        timeout = setTimeout(callback, delay );
     }
 }  
 
@@ -37,14 +28,23 @@ let getUsers = ()=>{
     .catch((err)=> console.log(err))
 }
 
-// let insertUser = ()=>{
-//     fetch('http://localhost:3000/users',{
-//         method: 'post',
-//         body: new URLSearchParams({
-//             name: searchInput.value 
-//         })
-//     })
-// }
+let insertUser = ()=>{
+    let [queryName, querySurname] = searchInput.value.split(' ');
+    fetch('http://localhost:3000/add/user',{
+        headers:{
+            'Accept': 'application/json',       //$$? isn't type json default 
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            name: queryName,
+            surname: querySurname || ''
+        })
+    }).then((response)=>{
+        console.log(response);
+    })
+    getUsers();
+}
 
 let renderUsers = (data)=>{
     let mainBoard = document.getElementById('main-board');
@@ -55,7 +55,7 @@ let renderUsers = (data)=>{
     data.forEach((element,index) => {
         let rawText = `${element.name} ${element.surname?element.surname:''}`
 
-        mainBoard.insertAdjacentHTML('beforeend', `<div class="record">Fullname: ${createText(splitOnWords(rawText,[qName,qSurname]))}</div>`);
+        mainBoard.insertAdjacentHTML('beforeend', `<div class="record">User: ${createText(splitOnWords(rawText,[qName,qSurname]))}</div>`);
         document.getElementById('main-board').lastChild.style.animationDelay = `${0.05 * index}s`
     });
 }
