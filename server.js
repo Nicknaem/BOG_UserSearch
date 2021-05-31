@@ -1,5 +1,4 @@
 //================================== Express server
-var path = require("path");
 const express = require('express')
 const app = express()
 const port = 3000;
@@ -27,7 +26,7 @@ MongoClient.connect( Config.mongodb.dbUrl , Config.mongodb.options, (err,client)
   })
 })
 
-//=================================== Routes
+
 
 app.post('/users', (req,res)=>{
     Users.search(req.body).then((result)=>{
@@ -42,7 +41,7 @@ app.post('/add/user', (req,res)=>{
 })
 
 app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/app/index.html'));
+  res.sendFile(__dirname + '/app/index.html');
 })
 
 

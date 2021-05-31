@@ -12,7 +12,10 @@ template.innerHTML = `
         <slot></slot>
     </div>
 `
-class mainContainer extends HTMLElement{
+class MainContainer extends HTMLElement{
+    static get is(){
+        return 'main-container';
+    }
     constructor(){
         super()
         this.attachShadow({mode:'open'});
@@ -21,4 +24,4 @@ class mainContainer extends HTMLElement{
 }
 
 
-window.customElements.define('main-container',mainContainer)
+window.customElements.define(MainContainer.is,MainContainer)

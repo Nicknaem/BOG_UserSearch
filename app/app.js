@@ -1,7 +1,6 @@
-const searchInput = document.getElementById('search-input');
-
+const searchInput = document.getElementById('search-bar');
+let timeout;
 let debounce = ( callback, delay )=>{
-    let timeout;
     return function() {
         clearTimeout( timeout );
         timeout = setTimeout(callback, delay );
@@ -9,7 +8,7 @@ let debounce = ( callback, delay )=>{
 }  
 
 let getUsers = ()=>{
-    let [queryName, querySurname] = searchInput.value.split(' ');
+    let [queryName, querySurname] = searchInputValue.split(' ');
     fetch('http://localhost:3000/users',{
         headers:{
             'Accept': 'application/json',       //$$? isn't type json default 
@@ -29,7 +28,7 @@ let getUsers = ()=>{
 }
 
 let insertUser = ()=>{
-    let [queryName, querySurname] = searchInput.value.split(' ');
+    let [queryName, querySurname] = searchInputValue.split(' ');
     fetch('http://localhost:3000/add/user',{
         headers:{
             'Accept': 'application/json',       //$$? isn't type json default 
@@ -50,13 +49,13 @@ let renderUsers = (data)=>{
     let mainBoard = document.getElementById('main-board');
     mainBoard.innerHTML = '';
 
-    let [qName, qSurname] = searchInput.value.split(' ');
+    let [qName, qSurname] = searchInputValue.split(' ');
 
     data.forEach((element,index) => {
         let rawText = `${element.name} ${element.surname?element.surname:''}`
 
-        mainBoard.insertAdjacentHTML('beforeend', `<div class="record">User: ${createText(splitOnWords(rawText,[qName,qSurname]))}</div>`);
-        document.getElementById('main-board').lastChild.style.animationDelay = `${0.05 * index}s`
+        mainBoard.insertAdjacentHTML('beforeend', `<user-record style="--delay:${0.05 * index}s">${createText(splitOnWords(rawText,[qName,qSurname]))}</user-record>`);
+        // document.getElementById('main-board').lastChild.style.animationDelay = `${0.05 * index}s`
     });
 }
 
@@ -87,15 +86,21 @@ let createText = (textParts)=>{
 
     textParts.forEach((part,index)=>{
         if(!(index%2===0)){
-            console.log(`word is: ${part} at index: ${index}`)
-            textTemplate = textTemplate.concat(`<span class="query">${part}</span>`);
+            // console.log(`word is: ${part} at index: ${index}`)
+            textTemplate = textTemplate.concat(`<span>${part}</span>`);
         }else{
-            console.log(`part is: ${part} at index: ${index}`)
+            // console.log(`part is: ${part} at index: ${index}`)
             textTemplate = textTemplate.concat(part);
         }
     })
 
     return textTemplate;
 }
-
-searchInput.addEventListener("keyup", debounce( getUsers, 1000));
+let searchInputValue;
+searchInput.addEventListener("search-input-change", (event)=>{
+    searchInputValue = event.detail.value;
+    debounce(getUsers, 1000)()
+});
+searchInput.addEventListener("insert-user",()=>{
+    insertUser();
+})

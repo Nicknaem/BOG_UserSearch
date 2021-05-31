@@ -8,22 +8,23 @@
 </head>
 
 <body>
-    <!-- <main-container>
-        <search-bar>Search here</search-bar>
+    <main-container>
+        <search-bar id='search-bar'>Search here</search-bar>
     </main-container>
-    <main-container id="main-board"></main-container> -->
+    <main-container id="main-board"></main-container>
 
-    <div class="container">
+    <!-- <div class="container">
         <div class="search-bar">
-            <input id="search-input" type="text" placeholder="Search Here">
+            <input id="search-bar" type="text" placeholder="Search Here">
             <div class="add-button" onclick="insertUser()">+</div>
         </div>
     </div>
-    <div class="container" id="main-board"></div>
+    <div class="container" id="main-board"></div> -->
 
 </body>
 
-<!-- <script src="./components/searchBar.js"></script> -->
-<!-- <script src="./components/mainContainer.js"></script> -->
-<script src="/app.js"></script>
+<script type="module" defer src="./components/search-bar.js"></script>
+<script type="module" defer src="./components/main-container.js"></script>
+<script type="module" defer src="./components/user-record.js"></script>
+<script type="module" defer src="/app.js"></script>
 </html>
